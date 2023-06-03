@@ -1,0 +1,59 @@
+// App.js
+
+// DOM elements
+const container = document.getElementById('container');
+const screens = Array.from(document.getElementsByClassName('screen'));
+const backButton = document.getElementById('backButton');
+
+// Screen stack
+const screenStack = ['screen1'];
+let currentScreen = 'screen1';
+
+// Function to navigate to a screen
+function goToScreen(screenId) {
+  const nextScreen = document.getElementById(screenId);
+  if (!nextScreen) return;
+
+  screens.forEach(screen => {
+    if (screen.id === screenId) {
+      screen.style.display = 'block';
+    } else {
+      screen.style.display = 'none';
+    }
+  });
+
+  screenStack.push(screenId);
+  currentScreen = screenId;
+}
+
+// Function to go back
+function goBack() {
+  if (screenStack.length <= 1) return;
+
+  const previousScreenId = screenStack.pop();
+  const previousScreen = document.getElementById(previousScreenId);
+
+  screens.forEach(screen => {
+    if (screen.id === previousScreenId) {
+      screen.style.display = 'block';
+    } else {
+      screen.style.display = 'none';
+    }
+  });
+
+  currentScreen = previousScreenId;
+}
+
+// Event listeners
+document.addEventListener('DOMContentLoaded', () => {
+  screens.forEach((screen, index) => {
+    if (index === 0) {
+      screen.style.display = 'block';
+    } else {
+      screen.style.display = 'none';
+    }
+  });
+});
+
+backButton.addEventListener('click', goBack);
+
